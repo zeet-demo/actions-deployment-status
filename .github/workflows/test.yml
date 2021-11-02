@@ -1,0 +1,13 @@
+name: test
+on: [deployment_status]
+jobs:
+  test:
+    # only runs this job on successful deploy
+    if: github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Environment URL
+        run: echo Environment URL ${{ github.event.deployment_status.environment_url }}
+
+      - name: Run test
+        run: curl ${{ github.event.deployment_status.environment_url }}
